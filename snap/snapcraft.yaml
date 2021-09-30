@@ -56,6 +56,9 @@ apps:
       IOTEDGE_HOST: unix://$SNAP_COMMON/run/mgmt.sock
     plugs:
       - docker-cli
+      - docker
+      - docker-support
+      - docker-support-privileged
       - hardware-observe
       - home
       - mount-observe
@@ -72,6 +75,9 @@ apps:
       - dockerd
     plugs:
       - docker-cli
+      - docker
+      - docker-support
+      - docker-support-privileged
       - hardware-observe
       - home
       - mount-observe
@@ -141,6 +147,7 @@ apps:
       - timezone-control
       - timeserver-control
       - time-control
+      - login-session-observe
     slots:
       - docker-daemon
 

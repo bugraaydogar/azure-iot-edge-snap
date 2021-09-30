@@ -12,7 +12,7 @@ The snap is built with snapcraft. To build the snap:
 
 ```bash
 git clone
-snapcraft
+snapcraft --use-lxd
 ```
 
 # Installing the snap
@@ -31,6 +31,11 @@ After the snap has been installed connect the following interfaces as minimum:
 sudo snap connect azure-iot-edge:docker-support
 sudo snap connect azure-iot-edge:firewall-control
 sudo snap connect azure-iot-edge:home
+sudo snap connect azure-iot-edge:network-control
+sudo snap connect azure-iot-edge:network-observe
+sudo snap connect azure-iot-edge:process-control
+sudo snap connect azure-iot-edge:system-observe
+sudo snap connect azure-iot-edge:docker-support-privileged
 ```
 
 Make sure `dockerd` service is active:
@@ -39,7 +44,7 @@ Make sure `dockerd` service is active:
 sudo snap services azure-iot-edge
 ```
 
-Now that `dockerd` is running successfully, you will need to provide your connection string obtained from Azure when you setup the hub so that `iotedged` can make a connection to Azure. The connection string (unquoted) should be put into a file and provide the file to the snap with `snap set` as shown below:
+Now that `dockerd` is running successfully, you will need to provide your connection string obtained from Azure when you setup the hub so that `iotedged` can make a connection to Azure. 
 
 ```bash
 sudo snap set azure-iot-edge connection-string="<connection string>"
@@ -47,7 +52,8 @@ sudo snap set azure-iot-edge connection-string="<connection string>"
 
 Note that connection string will be read from snap configuration and stored into iotedge config.yaml. After connection string is removed from snap configuration so it cannot be read from there.
 
-This will add your connection string to the config file and automatically start the service running. After that you should be able to see the modules you added to the device running successfully with the `iotedge` command in the snap:
+This will add your connection string to the config file and automatically start the service running. For some reason, iotedged service does not start and requires a manual invoke by running `sudo snap restart azure-iot-edge.iotedge`. 
+After that you should be able to see the modules you added to the device running successfully with the `iotedge` command in the snap:
 
 ```bash
 $ sudo azure-iot-edge.iotedge list

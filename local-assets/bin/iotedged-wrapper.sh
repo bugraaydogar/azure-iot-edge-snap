@@ -27,9 +27,7 @@ update_connection_string() {
 
 update_host_name() {
 	# update device host name in iotedge config.yaml
-        ${SNAP}/bin/yq eval -i \
-                '.hostname = \"$HOSTNAME\"" \
-                ${SNAP_DATA}/etc/iotedge/config.yaml
+  ${SNAP}/bin/yq eval -i ".hostname = \"$HOSTNAME\""  ${SNAP_DATA}/etc/iotedge/config.yaml
 }
 
 # update config if needed
@@ -39,4 +37,4 @@ update_connection_string
 wait_for_dockerd
 
 exec "$@" \
-    -c /etc/iotedge/config.yaml
+    -c ${SNAP_DATA}/etc/iotedge/config.yaml
